@@ -1,5 +1,5 @@
 Nocc:       10
 Nspc:       13
-PmatLim:    1.0e-10
+CutoffLim:  1.0e-10
 ScaleHcore: 1.0e0
 ScaleVee:   1.0e0

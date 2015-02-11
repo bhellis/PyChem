@@ -1,4 +1,5 @@
 import math
+import copy
 import numpy as NP
 
 
@@ -48,16 +49,16 @@ class Chem_sys(object):
         return self.pmat_cutoff
 
     def set_hcore(self, hcorein):
-        self.hcore = hcorein
+        self.hcore = copy.deepcopy(hcorein)
 
     def set_vee(self, veein):
-        self.vee = veein
+        self.vee = copy.deepcopy(veein)
 
     def set_e_ref(self, ein):
-        self.e_ref = ein
+        self.e_ref = copy.deepcopy(ein)
 
     def set_e_corr(self, e_corr):
-        self.e_corr = e_corr
+        self.e_corr = copy.deepcopy(e_corr)
 
     def get_hcore(self):
         return self.hcore
@@ -66,7 +67,7 @@ class Chem_sys(object):
         return self.vee
 
     def set_orb_eng(self, orb_eng):
-        self.orb_eng = orb_eng
+        self.orb_eng = copy.deepcopy(orb_eng)
 
     def get_orb_eng(self):
         return self.orb_eng

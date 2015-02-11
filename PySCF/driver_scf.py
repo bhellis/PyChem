@@ -9,8 +9,10 @@ from scipy import linalg as LA
 #from PySCF import integral_reader as IntRd
 from ChemSys import chem_sys
 from PySCF import transforms as tran
+from Misc import timing
 
 
+@timing.time_fxn
 def driver_scf(chem1):
     nocc   = chem1.get_nocc()
     nspace = chem1.get_nspace()
@@ -35,7 +37,7 @@ def driver_scf(chem1):
         fmat = calc_fock(chem1, hcore, vee, pmat)
         if abs(norm_last - norm_new) < chem1.pmat_cutoff:
             break
-        elif ncycle == 1000:
+        elif ncycle == 100:
             print('Error -- Max SCF Cycle Reached -- Exiting...')
             sys.exit()
         else:
@@ -48,12 +50,14 @@ def driver_scf(chem1):
     hcorespin, veespin = tran.mo_space_spin_transform(chem1, hcoremo, veemo)
     orb_eng = tran.orb_eng_space_spin_transform(nspace, nspin, fmat, smat)
 
+    # Set Vals
     chem1.set_hcore(hcorespin)
     chem1.set_vee(veespin)
     chem1.set_e_ref(e_hf)
     chem1.set_orb_eng(orb_eng)
 
-    return chem1
+    chem1.show_e_info('SCF')
+
 
 
 

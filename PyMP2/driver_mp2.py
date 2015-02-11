@@ -1,18 +1,22 @@
 import numpy as NP
 from ChemSys import chem_sys
+from Misc import timing
 
 
-def driver_mp2(my_sys):
-    nocc = my_sys.get_nocc()
-    nspin = my_sys.get_nspin()
-    hcore = my_sys.get_hcore()
-    vee = my_sys.get_vee()
-    orb_eng = my_sys.get_orb_eng()
+@timing.time_fxn
+def driver_mp2(chem1):
+    nocc = chem1.get_nocc()
+    nspin = chem1.get_nspin()
+    hcore = chem1.get_hcore()
+    vee = chem1.get_vee()
+    orb_eng = chem1.get_orb_eng()
 
     t_mp2 = calc_t_mp2(nocc, nspin, hcore, vee, orb_eng)
     e_corr = calc_mp2_corr(nocc, nspin, vee, t_mp2)
     #print(e_corr)
-    my_sys.set_e_corr(e_corr)
+    chem1.set_e_corr(e_corr)
+
+    chem1.show_e_info('MP2')
 
 
 def calc_mp2_corr(nocc, nspin, vee, t_mp2):
